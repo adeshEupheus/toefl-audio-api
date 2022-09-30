@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // schemas  = ["user", "test", "audio"]
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  email    String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("user")
+}
+
+model Test {
+  id Int @id @default(autoincrement())
+  Title String
+  audio Audio[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("test")
+}
+
+model Audio {
+  id        Int      @id @default(autoincrement())
+  Title  String
+  Url    String
+  test      Test     @relation(fields: [TestId], references: [id], onDelete: Cascade)
+  TestId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("audio")
+}

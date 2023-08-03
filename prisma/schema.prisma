@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // schemas  = ["school", "test", "audio", "public"]
+}
+
+model Schools {
+  id       Int    @id @default(autoincrement())
+  schoolName String @unique
+  state String
+  email String @unique
+  city String
+  address String
+  pin String
+  expireStart DateTime
+  schoolCode String @unique
+  expireAt DateTime
+  salesRep String @default("null")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("school")
+}
+
+model Admin {
+   id       Int    @id @default(autoincrement())
+  name String
+  loginCode String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Test {
+  id Int @id @default(autoincrement())
+  Title String
+  audio Audio[]
+  category String
+  startTime DateTime
+  endTime DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("test")
+}
+
+model Audio {
+  id        Int      @id @default(autoincrement())
+  Title  String
+  Url    String
+  test      Test     @relation(fields: [TestId], references: [id], onDelete: Cascade)
+  TestId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //  @@schema("audio")
+}

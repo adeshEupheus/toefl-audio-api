@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateAudio = exports.validateTest = exports.validateSchool = void 0;
+exports.validateUser = exports.validateAudio = exports.validateTest = exports.validateSchool = void 0;
 const validationSchem_1 = require("../util/validationSchem");
 const validateSchool = (req, res, next) => {
     const validationResult = validationSchem_1.SchoolSchema.validate(req.body);
@@ -35,3 +35,14 @@ const validateAudio = (req, res, next) => {
     }
 };
 exports.validateAudio = validateAudio;
+const validateUser = (req, res, next) => {
+    const userResult = validationSchem_1.userSchema.validate(req.body);
+    if (userResult.error) {
+        console.log(userResult.error);
+        return res.status(200).json({ error: userResult.error });
+    }
+    else {
+        next();
+    }
+};
+exports.validateUser = validateUser;

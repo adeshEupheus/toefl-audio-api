@@ -46,7 +46,7 @@ const getAudioByTest = (req, res) => __awaiter(void 0, void 0, void 0, function*
         const { testId } = req.params;
         const allAudio = yield prisma.audio.findMany({
             where: {
-                TestId: Number(testId),
+                TestId: testId,
             },
         });
         res.status(200).json({ success: true, message: allAudio });

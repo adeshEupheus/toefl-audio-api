@@ -16,9 +16,12 @@ export const auth: RequestHandler = (req, res, next) => {
     ) as JwtPayload;
 
     req.schoolId = { schoolId: payload?.schoolId };
+
     if (payload?.admin) {
       req.admin = payload?.admin;
     }
+
+    req.userId = payload?.userId;
 
     next();
   } catch (error) {

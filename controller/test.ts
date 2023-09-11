@@ -38,9 +38,20 @@ export const getAll: RequestHandler = async (req, res) => {
 export const getTestByCategory: RequestHandler = async (req, res) => {
   try {
     const { category } = req.params;
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.userId,
+      },
+    });
+
     const tests = await prisma.test.findMany({
       where: {
         category,
+        grades: {
+          some: {
+            id: user?.gradeId,
+          },
+        },
       },
     });
     res.status(200).json({ success: true, message: tests });

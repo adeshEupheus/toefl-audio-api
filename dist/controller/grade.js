@@ -9,26 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSchoolInfo = void 0;
+exports.getAllGrades = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-const getSchoolInfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllGrades = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield prisma.user.findUnique({
-            where: {
-                id: req === null || req === void 0 ? void 0 : req.userId,
-            },
-        });
-        const getSchoolInfo = yield prisma.schools.findUnique({
-            where: {
-                id: user === null || user === void 0 ? void 0 : user.schoolId,
-            },
-        });
-        res.status(200).json({ success: true, message: getSchoolInfo });
+        const allGrade = yield prisma.grade.findMany();
+        return res.status(200).json({ success: true, message: allGrade });
     }
     catch (error) {
         console.log(error);
-        res.status(500).json({ msg: "something went wrong" });
+        return res
+            .status(500)
+            .json({ msg: "something went wrong", success: false });
     }
 });
-exports.getSchoolInfo = getSchoolInfo;
+exports.getAllGrades = getAllGrades;

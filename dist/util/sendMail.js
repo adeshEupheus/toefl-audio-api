@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendResetPasswordEmail = void 0;
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const SES_CONFIG = {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -33,4 +34,28 @@ let sendEmail = (recipientEmail, schoolCode) => {
     return AWS_SES.sendEmail(params).promise();
     // return {awsResponse: }
 };
+const sendResetPasswordEmail = (recipientEmail, link) => {
+    let params = {
+        Source: "otp@eupheusapp.com",
+        Destination: {
+            ToAddresses: [recipientEmail],
+        },
+        ReplyToAddresses: [],
+        Message: {
+            Body: {
+                Html: {
+                    Charset: "UTF-8",
+                    Data: `<p>Hi ${recipientEmail}, You have requested to reset your password. Click the link below to reset your password. <a href=${link}>Reset Password</a></p>`,
+                },
+            },
+            Subject: {
+                Charset: "UTF-8",
+                Data: `Hello, ${recipientEmail}!`,
+            },
+        },
+    };
+    return AWS_SES.sendEmail(params).promise();
+    // return {awsResponse: }
+};
+exports.sendResetPasswordEmail = sendResetPasswordEmail;
 exports.default = sendEmail;

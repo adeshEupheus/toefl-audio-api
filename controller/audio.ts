@@ -35,7 +35,7 @@ export const getAudioByTest: RequestHandler = async (req, res) => {
     const { testId } = req.params;
     const allAudio = await prisma.audio.findMany({
       where: {
-        TestId: Number(testId),
+        TestId: testId,
       },
     });
     res.status(200).json({ success: true, message: allAudio });

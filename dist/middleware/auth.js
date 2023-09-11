@@ -17,6 +17,7 @@ const auth = (req, res, next) => {
         if (payload === null || payload === void 0 ? void 0 : payload.admin) {
             req.admin = payload === null || payload === void 0 ? void 0 : payload.admin;
         }
+        req.userId = payload === null || payload === void 0 ? void 0 : payload.userId;
         next();
     }
     catch (error) {

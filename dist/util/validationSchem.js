@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AudioSchema = exports.TestSchema = exports.SchoolSchema = void 0;
+exports.userSchema = exports.AudioSchema = exports.TestSchema = exports.SchoolSchema = void 0;
 const joi_1 = __importDefault(require("joi"));
 exports.SchoolSchema = joi_1.default.object({
     schoolName: joi_1.default.string().required(),
@@ -23,4 +23,12 @@ exports.AudioSchema = joi_1.default.object({
     Title: joi_1.default.string().required(),
     Url: joi_1.default.string().required(),
     TestId: joi_1.default.number().required(),
+});
+exports.userSchema = joi_1.default.object({
+    schoolCode: joi_1.default.string().required(),
+    fullName: joi_1.default.string().required(),
+    userName: joi_1.default.string().required().min(6),
+    email: joi_1.default.string().required().email(),
+    grade: joi_1.default.string().required(),
+    password: joi_1.default.string().required().min(6),
 });

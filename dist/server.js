@@ -17,14 +17,36 @@ const test_1 = __importDefault(require("./routes/test"));
 const audio_1 = __importDefault(require("./routes/audio"));
 const user_1 = __importDefault(require("./routes/user"));
 const school_1 = __importDefault(require("./routes/school"));
-const auth_1 = require("./middleware/auth");
+const auth_1 = __importDefault(require("./routes/auth"));
+const grade_1 = __importDefault(require("./routes/grade"));
+const auth_2 = require("./middleware/auth");
 app.get("/", (req, res) => {
     res.send("server is working");
 });
-app.use("/test", auth_1.auth, test_1.default);
-app.use("/audio", auth_1.auth, audio_1.default);
-app.use("/school", auth_1.auth, school_1.default);
-app.use("/auth", user_1.default);
+app.use("/test", auth_2.auth, test_1.default);
+app.use("/audio", auth_2.auth, audio_1.default);
+app.use("/school", auth_2.auth, school_1.default);
+app.use("/grade", grade_1.default);
+app.use("/user", user_1.default);
+app.use("/auth", auth_1.default);
+// import { PrismaClient } from "@prisma/client";
+// const prisma = new PrismaClient();
+// const test = async () => {
+//   await prisma.schools.create({
+//     data: {
+//       schoolName: "Random School",
+//       state: "Himachal Pradesh",
+//       city: "Solan",
+//       address: "Test Address",
+//       email: "adeshs@eupheus.in",
+//       pin: "121123",
+//       expireStart: new Date(),
+//       expireAt: new Date(2023, 11, 20),
+//       schoolCode: "YnI2uy",
+//     },
+//   });
+// };
+// test();
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`server is running on ${PORT}`);

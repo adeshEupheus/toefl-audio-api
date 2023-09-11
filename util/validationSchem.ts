@@ -21,3 +21,12 @@ export const AudioSchema = Joi.object({
   Url: Joi.string().required(),
   TestId: Joi.number().required(),
 });
+
+export const userSchema = Joi.object({
+  schoolCode: Joi.string().required(),
+  fullName: Joi.string().required(),
+  userName: Joi.string().required().min(6),
+  email: Joi.string().required().email(),
+  grade: Joi.string().required(),
+  password: Joi.string().required().min(6),
+});

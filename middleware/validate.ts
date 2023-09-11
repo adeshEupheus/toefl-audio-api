@@ -1,5 +1,10 @@
 import { RequestHandler } from "express";
-import { AudioSchema, SchoolSchema, TestSchema } from "../util/validationSchem";
+import {
+  AudioSchema,
+  SchoolSchema,
+  TestSchema,
+  userSchema,
+} from "../util/validationSchem";
 
 export const validateSchool: RequestHandler = (req, res, next) => {
   const validationResult = SchoolSchema.validate(req.body);
@@ -26,6 +31,16 @@ export const validateAudio: RequestHandler = (req, res, next) => {
   if (AudioResult.error) {
     console.log(AudioResult.error);
     return res.status(200).json({ error: AudioResult.error });
+  } else {
+    next();
+  }
+};
+
+export const validateUser: RequestHandler = (req, res, next) => {
+  const userResult = userSchema.validate(req.body);
+  if (userResult.error) {
+    console.log(userResult.error);
+    return res.status(200).json({ error: userResult.error });
   } else {
     next();
   }

@@ -48,9 +48,19 @@ exports.getAll = getAll;
 const getTestByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { category } = req.params;
+        const user = yield prisma.user.findUnique({
+            where: {
+                id: req.userId,
+            },
+        });
         const tests = yield prisma.test.findMany({
             where: {
                 category,
+                grades: {
+                    some: {
+                        id: user === null || user === void 0 ? void 0 : user.gradeId,
+                    },
+                },
             },
         });
         res.status(200).json({ success: true, message: tests });

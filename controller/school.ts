@@ -5,9 +5,15 @@ const prisma = new PrismaClient();
 
 export const getSchoolInfo: RequestHandler = async (req, res) => {
   try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req?.userId,
+      },
+    });
+
     const getSchoolInfo = await prisma.schools.findUnique({
       where: {
-        id: req?.schoolId?.schoolId,
+        id: user?.schoolId,
       },
     });
 
